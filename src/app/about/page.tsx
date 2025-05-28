@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
@@ -8,274 +8,222 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
-  const headingRef = useRef(null);
-  const textRef = useRef(null);
-  const imageRef = useRef(null);
+  const mainHeadingRef = useRef(null);
+  const storyTextRef = useRef(null);
+  const storyImageRef = useRef(null);
 
-  const historyTitleRef = useRef(null);
-  const historyTextRef = useRef(null);
-  const img1Ref = useRef(null);
-  const img2Ref = useRef(null);
-  const img3Ref = useRef(null);
+  const historyHeadingRef = useRef(null);
+  const historyParagraphRef = useRef(null);
+  const historyImgRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Missing refs added here:
-  const strengthsRef = useRef(null);
-  const strengthsTitleRef = useRef(null);
+  const strengthsHeadingRef = useRef(null);
+  const strengthItemsRef = useRef<(HTMLLIElement | null)[]>([]);
 
   useEffect(() => {
-    // About section animation
-    gsap.from(headingRef.current, {
-      y: -50,
+    gsap.from(mainHeadingRef.current, {
+      y: -80,
       opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
+      duration: 1.2,
+      ease: 'power4.out',
       scrollTrigger: {
-        trigger: headingRef.current,
-        start: 'top 80%',
-      },
-    });
-
-    gsap.from(textRef.current, {
-      x: -60,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: textRef.current,
-        start: 'top 80%',
-      },
-    });
-
-    gsap.from(imageRef.current, {
-      x: 60,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: imageRef.current,
-        start: 'top 80%',
-      },
-    });
-
-    // History section animation
-    gsap.from(historyTitleRef.current, {
-      y: -40,
-      opacity: 0,
-      duration: 1,
-      scrollTrigger: {
-        trigger: historyTitleRef.current,
+        trigger: mainHeadingRef.current,
         start: 'top 85%',
       },
     });
 
-    gsap.from(historyTextRef.current, {
-      x: -50,
+    gsap.from(storyTextRef.current, {
+      x: -100,
+      opacity: 0,
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: storyTextRef.current,
+        start: 'top 80%',
+      },
+    });
+
+    gsap.from(storyImageRef.current, {
+      x: 100,
+      opacity: 0,
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: storyImageRef.current,
+        start: 'top 80%',
+      },
+    });
+
+    gsap.from(historyHeadingRef.current, {
+      y: -60,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: historyHeadingRef.current,
+        start: 'top 85%',
+      },
+    });
+
+    gsap.from(historyParagraphRef.current, {
+      y: 50,
       opacity: 0,
       duration: 1,
       delay: 0.2,
+      ease: 'power2.out',
       scrollTrigger: {
-        trigger: historyTextRef.current,
+        trigger: historyParagraphRef.current,
         start: 'top 85%',
       },
     });
 
-    gsap.from([img1Ref.current, img2Ref.current, img3Ref.current], {
-      y: 60,
+    gsap.from(historyImgRefs.current, {
+      y: 80,
       opacity: 0,
       duration: 1,
-      stagger: 0.3,
-      ease: 'power2.out',
+      stagger: 0.2,
+      ease: 'back.out(1.7)',
       scrollTrigger: {
-        trigger: img1Ref.current,
+        trigger: historyImgRefs.current[0],
         start: 'top 90%',
       },
     });
 
-    // Optional: Animate strengths section if needed
-    gsap.from(strengthsTitleRef.current, {
-      y: 40,
+    gsap.from(strengthsHeadingRef.current, {
+      y: -60,
       opacity: 0,
       duration: 1,
+      ease: 'power3.out',
       scrollTrigger: {
-        trigger: strengthsRef.current,
+        trigger: strengthsHeadingRef.current,
         start: 'top 85%',
       },
+    });
+
+    strengthItemsRef.current.forEach((item, index) => {
+      if (item) {
+        gsap.from(item, {
+          opacity: 0,
+          y: 50,
+          duration: 0.8,
+          ease: 'power2.out',
+          delay: index * 0.1,
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 90%',
+          },
+        });
+      }
     });
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-yellow-50 to-green-100 py-16 px-4 sm:px-8">
-      <h1
-        ref={headingRef}
-        className="text-4xl font-bold text-green-800 text-center mb-12"
-      >
-        About Way Agro Industry
+    <div className="min-h-screen bg-gradient-to-br from-lime-50 via-green-50 to-lime-100 py-16 px-4 sm:px-8 overflow-hidden">
+      {/* Section 1: Main Title */}
+      <h1 ref={mainHeadingRef} className="text-5xl md:text-6xl font-extrabold text-green-900 text-center mb-16 leading-tight">
+        Discover Way Agro Industry
       </h1>
 
-      <section className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center mb-20">
-        {/* Left Text */}
-        <div ref={textRef}>
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">Our Story</h2>
-          <p className="text-gray-700 leading-relaxed text-justify">
-            Way Agro is the dream of young entrepreneurs from a small region in Bangladesh, determined to build a consumer-friendly business model. Since 2010, we’ve faced challenges in farming, from poor-quality feed to technical limitations.
-            <br /><br />
-            To overcome these, we launched Community Development Farming (CDF) and the Farmer Participatory Program Approach (FPPA), ensuring quality at every level. We’re not just a business — we're a mission-driven company enhancing the country's socio-economic development.
-            <br /><br />
-            Our commitment lies in ingredient quality, process control, and safety. Through our benchmark brand “Sujala,” we've provided farmers with the best feed, minimized risks, and maximized results — fulfilling our promise: “Progressive Farming: Prosperous Life.”
+      {/* Section 2: Our Story */}
+      <section className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center mb-24">
+        <div ref={storyTextRef} className="p-6 md:p-8 bg-white rounded-3xl shadow-xl border border-green-100">
+          <h2 className="text-4xl font-bold text-green-800 mb-6">Our Story & Vision</h2>
+          <p className="text-gray-700 text-lg leading-relaxed text-justify mb-4">
+            <strong>Way Agro</strong> was born from the dream of young rural entrepreneurs in Bangladesh. Since 2010, we&lsquo;ve addressed key farming issues, from poor feed to technology gaps.
+          </p>
+          <p className="text-gray-700 text-lg leading-relaxed text-justify mb-4">
+            Our innovations like <strong>CDF</strong> and <strong>FPPA</strong> ensure quality and farmer empowerment. We&lsquo;re committed to safe nutrition, process control, and sustainability.
+          </p>
+          <p className="text-gray-700 text-lg leading-relaxed text-justify">
+            With our flagship brand <strong>&ldquo;Sujala&quot;</strong>, we deliver superior feed and farming success — fulfilling our motto: <em>&#34;Progressive Farming: Prosperous Life.&ldquo;</em>
           </p>
         </div>
-
-        {/* Right Image Collage Container */}
-        <div
-          ref={imageRef}
-          className="p-4 bg-gradient-to-br from-green-100 via-yellow-50 to-green-200 rounded-2xl shadow-2xl w-fit mx-auto"
-        >
+        <div ref={storyImageRef} className="relative p-6 bg-gradient-to-br from-green-100 via-lime-50 to-green-200 rounded-3xl shadow-2xl w-fit mx-auto">
           <Image
             src="/assets/feedmp1.jpg"
-            alt="Way Agro Collage"
-            width={500}
-            height={400}
-            className="rounded-xl shadow-lg border-[6px] border-white"
+            alt="Way Agro Overview"
+            width={600}
+            height={450}
+            className="rounded-2xl border-[8px] border-white shadow-xl object-cover"
             priority
           />
         </div>
       </section>
 
-      {/* History Section */}
-      <section className="max-w-6xl mx-auto">
-        <h2
-          ref={historyTitleRef}
-          className="text-4xl font-bold text-green-800 text-center mb-10"
-        >
-          History of Way Agro
+      {/* Section 3: History */}
+      <section className="max-w-6xl mx-auto mb-24">
+        <h2 ref={historyHeadingRef} className="text-4xl md:text-5xl font-bold text-green-800 text-center mb-12">
+          Our Journey: The History of Way Agro
         </h2>
-
-        <p
-          ref={historyTextRef}
-          className="text-gray-700 text-lg leading-relaxed mb-12 text-justify"
-        >
-          Way Agro started his business concern not only for business but for socio-economic development of the country. We are an extensively growing company in Bangladesh.
-          <br /><br />
-          Our promise for safe nutrition: Sujala feed is a substantial source of protein & nutrition in a household’s nutritional diet. To ensure health safety, Way Agro looks seriously into the following components: ingredient quality, process control, finished feed quality, and control of toxic substances including pathogenic micro-organisms.
-          <br /><br />
-          Sujala management ensures support from root-level stakeholders, farm management, and efficient cultivation. By producing cost-effective feed, Sujala sustains growth without compromising profitability.
-          <br /><br />
-          We ensure the best quality and aim to provide “Progressive Farming: Prosperous Life,” which is the anthem to people’s “Key to Prosperity.” Our product and business are ethical, and our environment is friendly & sustainable.
-          <br /><br />
-          Sujala has had a tremendous positive impact on farmers for its excellent food conversion ratio and reduced farm management hazards — becoming a trusted companion to stakeholders.
+        <p ref={historyParagraphRef} className="text-gray-700 text-lg leading-relaxed text-justify px-4 mb-16">
+          Sujala ensures safe nutrition for thousands of families. With quality control, toxin checks, and support for farmers, we’ve become a symbol of trust and sustainability. Our products are not just cost-effective — they’re part of a national mission for growth.
         </p>
-
-        {/* Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div
-            ref={img1Ref}
-            className="rounded-xl overflow-hidden shadow-xl hover:scale-105 transition-transform duration-500"
-          >
-            <Image
-              src="/assets/mach.jpg"
-              alt="Fish farming"
-              width={500}
-              height={350}
-              className="w-full h-auto object-cover"
-            />
-          </div>
-          <div
-            ref={img2Ref}
-            className="rounded-xl overflow-hidden shadow-xl hover:scale-105 transition-transform duration-500"
-          >
-            <Image
-              src="/assets/murgiFeed.jpg"
-              alt="Poultry feed"
-              width={500}
-              height={350}
-              className="w-full h-auto object-cover"
-            />
-          </div>
-          <div
-            ref={img3Ref}
-            className="rounded-xl overflow-hidden shadow-xl hover:scale-105 transition-transform duration-500"
-          >
-            <Image
-              src="/assets/goru.jpg"
-              alt="Cattle feed"
-              width={500}
-              height={350}
-              className="w-full h-auto object-cover"
-            />
-          </div>
-        </div>
+    
       </section>
 
-      {/* Strengths Section */}
-      <section ref={strengthsRef} className="py-20 container mx-auto px-4">
-        <h2 ref={strengthsTitleRef} className="text-4xl font-bold text-green-800 text-center mb-16">
-          Our Strengths
+      {/* Section 4: Our Strengths */}
+      <section className="py-20 px-4 bg-green-50 rounded-tl-full rounded-br-full max-w-7xl mx-auto shadow-inner">
+        <h2 ref={strengthsHeadingRef} className="text-4xl md:text-5xl font-bold text-green-900 text-center mb-16">
+          Pillars of Our Success: Our Strengths
         </h2>
-        <div className="max-w-3xl mx-auto">
-          <ul className="space-y-6">
-            <li className="strength-item flex items-start gap-4">
-              <div className="bg-green-100 p-2 rounded-full mt-1">
-                {/* Replace Check with your icon or import */}
-                <svg className="text-green-600 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 5.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" /></svg>
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+          {[
+            {
+              title: 'Quality Assurance',
+              desc: 'Every product meets the highest international standards.',
+              icon: (
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 5.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"
+                  clipRule="evenodd"
+                />
+              ),
+            },
+            {
+              title: 'Full Transparency',
+              desc: 'Open communication and ethical operations.',
+              icon: (
+                <>
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                  <path
+                    fillRule="evenodd"
+                    d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                    clipRule="evenodd"
+                  />
+                </>
+              ),
+            },
+            {
+              title: 'Widespread Accessibility',
+              desc: 'Our products reach farmers in every region.',
+              icon: (
+                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM13 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2h-2zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM13 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2z" />
+              ),
+            },
+            {
+              title: 'Consistency',
+              desc: 'We deliver dependable quality and results every time.',
+              icon: (
+                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1 4h2v5h-2V6zm1 9a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
+              ),
+            },
+          ].map((item, i) => (
+            <li
+              key={i}
+            ref={(el: HTMLLIElement | null) => {
+  strengthItemsRef.current[i] = el;
+}}
+              className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-lg border border-green-100 hover:shadow-xl transition"
+            >
+              <div className="bg-green-100 p-4 rounded-full mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  {item.icon}
+                </svg>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800">Quality</h3>
-                <p className="text-gray-600">
-                  Our unwavering commitment to quality ensures that every product meets the highest standards.
-                </p>
-              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">{item.title}</h3>
+              <p className="text-gray-600">{item.desc}</p>
             </li>
-
-            <li className="strength-item flex items-start gap-4">
-              <div className="bg-green-100 p-2 rounded-full mt-1">
-                <svg className="text-green-600 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 5.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" /></svg>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800">Transparency</h3>
-                <p className="text-gray-600">
-                  We believe in open communication and transparency in all our business practices.
-                </p>
-              </div>
-            </li>
-
-            <li className="strength-item flex items-start gap-4">
-              <div className="bg-green-100 p-2 rounded-full mt-1">
-                <svg className="text-green-600 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 5.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" /></svg>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800">Accessibility</h3>
-                <p className="text-gray-600">
-                  Our products and services are designed to be accessible to farmers of all sizes.
-                </p>
-              </div>
-            </li>
-
-            <li className="strength-item flex items-start gap-4">
-              <div className="bg-green-100 p-2 rounded-full mt-1">
-                <svg className="text-green-600 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 5.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" /></svg>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800">Consistency</h3>
-                <p className="text-gray-600">
-                  We deliver consistent quality and service that our customers can rely on.
-                </p>
-              </div>
-            </li>
-
-            <li className="strength-item flex items-start gap-4">
-              <div className="bg-green-100 p-2 rounded-full mt-1">
-                <svg className="text-green-600 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 5.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" /></svg>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800">Innovation</h3>
-                <p className="text-gray-600">
-                  Our continuous investment in research and development keeps us at the forefront of agricultural
-                  innovation.
-                </p>
-              </div>
-            </li>
-          </ul>
-        </div>
+          ))}
+        </ul>
       </section>
     </div>
   );
