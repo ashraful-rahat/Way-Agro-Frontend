@@ -1,4 +1,3 @@
-// components/Navbar.tsx
 "use client"
 
 import React, { useState, useCallback, useEffect, useRef } from "react"
@@ -74,15 +73,14 @@ type HoveredLinkProps = {
 }
 
 const HoveredLink: React.FC<HoveredLinkProps> = ({ children, href, onClick }) => (
-  <Link href={href} legacyBehavior>
-    <motion.a
-      onClick={onClick}
+  <Link href={href} onClick={onClick} passHref>
+    <motion.span
       whileHover={{ x: 4, scale: 1.02 }}
       transition={{ duration: 0.2 }}
-      className="block text-gray-600 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-green-600 hover:to-yellow-600 transition-all duration-200 py-2 text-sm hover:bg-gradient-to-r hover:from-green-50 hover:to-yellow-50 px-3 rounded-lg font-medium"
+      className="block text-gray-600 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-green-600 hover:to-yellow-600 transition-all duration-200 py-2 text-sm hover:bg-gradient-to-r hover:from-green-50 hover:to-yellow-50 px-3 rounded-lg font-medium cursor-pointer"
     >
       {children}
-    </motion.a>
+    </motion.span>
   </Link>
 )
 
@@ -129,16 +127,17 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        onMouseLeave={() => setActive(null)}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-lg"
-      >
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-lg" onMouseLeave={() => setActive(null)}>
         <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-yellow-50 to-green-100 opacity-90 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* ✅ Animate only navbar content (not full bar) */}
+        <motion.div
+          initial={{ y: -80, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
           <div className="flex items-center justify-between h-16 lg:h-20">
             <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }} className="flex-shrink-0 z-10">
               <motion.div
@@ -177,14 +176,14 @@ export default function Navbar() {
                       </div>
                     </MenuItem>
                   ) : (
-                    <Link href={`/${menuItem.name.toLowerCase().replace(/\s+/g, "-")}`} legacyBehavior>
-                      <motion.a
-                        className="text-gray-700 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-green-600 hover:via-yellow-600 hover:to-green-600 font-semibold text-sm lg:text-base relative group transition-all duration-300"
+                    <Link href={`/${menuItem.name.toLowerCase().replace(/\s+/g, "-")}`} passHref>
+                      <motion.span
+                        className="text-gray-700 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-green-600 hover:via-yellow-600 hover:to-green-600 font-semibold text-sm lg:text-base relative group cursor-pointer transition-all duration-300 inline-block"
                         whileHover={{ scale: 1.05, y: -2 }}
                       >
                         {menuItem.name}
                         <motion.span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-500 via-yellow-500 to-green-500 group-hover:w-full transition-all duration-300" />
-                      </motion.a>
+                      </motion.span>
                     </Link>
                   )}
                 </motion.div>
@@ -203,8 +202,8 @@ export default function Navbar() {
               </motion.div>
             </motion.button>
           </div>
-        </div>
-      </motion.nav>
+        </motion.div>
+      </nav>
 
       <AnimatePresence>
         {isMobileMenuOpen && (
@@ -250,8 +249,8 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
+      {/* spacer */}
       <div className="h-16 lg:h-20" />
     </>
   )
 }
-

@@ -50,6 +50,7 @@ export const ProductItem = ({ title }: { title: string }) => {
 };
 
 export const HoveredLink = ({
+  
   href,
   children,
 }: {

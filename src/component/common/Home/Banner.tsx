@@ -85,7 +85,10 @@ const Banner = () => {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <button className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-base font-semibold transition">
+            <button
+              className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-base font-semibold transition"
+              aria-label="Start Growing Today"
+            >
               Start Growing Today <ArrowRight className="inline ml-2 w-4 h-4" />
             </button>
             <button className="px-6 py-3 border border-green-300 text-green-700 rounded-xl text-base font-semibold hover:bg-green-50 transition">
@@ -112,13 +115,13 @@ const Banner = () => {
 
         {/* Right - Image */}
         <div ref={imageRef} className="relative rounded-3xl overflow-hidden shadow-xl">
-       <Image
-  src="/assets/banner1.jpg" 
-  alt="Smart farming illustration"
-  width={800}             
-  height={450}
-  className="rounded-3xl object-cover w-full h-auto"
-/>
+          <Image
+            src="/assets/banner1.jpg"
+            alt="Smart farming illustration"
+            width={800}
+            height={450}
+            className="rounded-3xl object-cover w-full h-auto"
+          />
 
           {/* Floating Card */}
           <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-lg">
@@ -137,13 +140,6 @@ const Banner = () => {
           <div className="absolute -top-4 -right-4 w-24 h-24 bg-yellow-200 opacity-50 rounded-full blur-2xl" />
           <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-green-200 opacity-40 rounded-full blur-2xl" />
         </div>
-      </div>
-
-      {/* Bottom Wave */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1200 120" className="w-full h-auto">
-          <path d="M0,60 C300,120 900,0 1200,60 L1200,120 L0,120 Z" fill="white" opacity="0.8" />
-        </svg>
       </div>
     </div>
   )
