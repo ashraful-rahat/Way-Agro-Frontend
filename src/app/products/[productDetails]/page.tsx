@@ -5,18 +5,24 @@ import { products } from "../product";
 import ClientWrapper from "./ClientWrapper";
 import Link from "next/link";
 
-interface Params {
-  params: {
+interface ProductDetailsPageProps {
+  params: Promise<{
     productDetails: string;
-  };
+  }>;
 }
 
-export default async function ProductDetailsPage({ params }: Params) {
+export default async function ProductDetailsPage(props: ProductDetailsPageProps) {
+  // FIX START: Await the params property
+  const { params } = props; // Destructure props
+  const resolvedParams = await params; // Await the 'params' object
+  // FIX END: Await the params property
+
   // Debug logging
-  console.log("Params:", params);
+  console.log("Resolved Params:", resolvedParams); // Use resolvedParams here
   console.log("Products:", products);
 
-  const product = products.find((p) => p.id === params.productDetails);
+  // Use resolvedParams for finding the product
+  const product = products.find((p) => p.id === resolvedParams.productDetails);
 
   if (!product) return notFound();
 
@@ -62,9 +68,9 @@ export default async function ProductDetailsPage({ params }: Params) {
 
           {/* Content Section */}
           <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-1 gap-8"> {/* Changed to 1 column for ClientWrapper */}
               {/* Details */}
-              <div className="lg:col-span-2">
+              <div className="lg:col-span-1"> {/* Changed to 1 column for ClientWrapper */}
                 <h2 className="text-2xl font-semibold text-green-800 mb-4">
                   Product Details
                 </h2>
@@ -73,7 +79,7 @@ export default async function ProductDetailsPage({ params }: Params) {
                 </p>
               </div>
 
-              {/* Actions */}
+              {/* Actions - ClientWrapper now spans full width if grid is 1 column */}
               <ClientWrapper productId={product.id} />
             </div>
             {/* Back Button */}
